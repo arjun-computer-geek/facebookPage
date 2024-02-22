@@ -1,0 +1,25 @@
+version: '2'
+services:
+  client:
+    build: ./frontend    
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend:/client
+    links:
+      - server
+    networks: 
+      - webappnetwork
+  server:
+    build: ./backend
+    env_file: ./backend/.env
+   # restart: always    
+    ports:
+      - '8000:8000'
+    volumes: 
+      - ./backend:/server    
+    networks: 
+      - webappnetwork
+networks: 
+  webappnetwork: 
+    driver: bridge
